@@ -1,6 +1,6 @@
 ## forked from [wix/rtlcss-webpack-plugin](https://github.com/wix/rtlcss-webpack-plugin) to support `rspack`
 
-> only support [fullhash], [name]
+> 🔥🔥 only support [fullhash], [name]
 
 ---
 
