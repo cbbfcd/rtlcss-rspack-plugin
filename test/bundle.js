@@ -1,60 +1,47 @@
 /* global wallaby */
-import path from 'path';
-import webpack from 'webpack';
-import MemoryFS from 'memory-fs';
-import RtlCssPlugin from '../src';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+const path = require('path');
+const { rspack } = require('@rspack/core');
+const MemoryFS = require('memory-fs');
+const { RtlCssPlugin } = require('../dist/index.js');
 
-const workingFolder =
-  typeof wallaby !== 'undefined'
-    ? path.join(wallaby.localProjectDir, 'test')
-    : __dirname;
-
-export function fixture(fileName) {
-  return path.join(workingFolder, 'fixtures', fileName);
+function fixture(fileName) {
+  return path.join(__dirname, 'fixtures', fileName);
 }
 
-export function bundle(options, modifier = (x) => x) {
+function bundle(options, entry = {}) {
   return new Promise((resolve, reject) => {
-    const compiler = webpack(
-      modifier({
+    const compiler = rspack(
+      {
         entry: {
           bundle: fixture('index.js'),
+          ...entry,
         },
         output: {
           filename: '[name].js',
         },
-        resolveLoader: {
-          modules: [path.resolve(workingFolder, '..', 'node_modules')],
-        },
         module: {
           rules: [
             {
-              test: /\.css$/,
-              use: [
-                {
-                  loader: MiniCssExtractPlugin.loader,
-                },
-                'css-loader',
-              ],
+              test: /\.css$/i,
+              use: [rspack.CssExtractRspackPlugin.loader, 'css-loader'],
+              type: 'javascript/auto',
             },
           ],
         },
         plugins: [
-          new MiniCssExtractPlugin({
+          new rspack.CssExtractRspackPlugin({
             filename: '[name].css',
           }),
           new RtlCssPlugin(options),
         ],
-      }),
+      },
     );
-
     const memoryFileSystem = new MemoryFS();
     compiler.outputFileSystem = memoryFileSystem;
     compiler.run((err, stats) => {
       if (err) {
         return reject(err);
-      } else if (stats.hasErrors()) {
+      } else if (stats && stats.hasErrors()) {
         return reject(new Error(stats.toString()));
       } else {
         resolve(memoryFileSystem);
@@ -63,6 +50,10 @@ export function bundle(options, modifier = (x) => x) {
   });
 }
 
-export function filePath(name) {
+function filePath(name) {
   return path.join(process.cwd(), 'dist', name);
 }
+
+exports.filePath = filePath;
+exports.fixture = fixture;
+exports.bundle = bundle;

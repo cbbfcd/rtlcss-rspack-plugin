@@ -1,4 +1,10 @@
-# RtlCss Webpack Plugin [![Build Status](https://img.shields.io/travis/wix/rtlcss-webpack-plugin/master.svg?style=flat-square)](https://travis-ci.org/wix/rtlcss-webpack-plugin) [![npm version](https://img.shields.io/npm/v/rtlcss-webpack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/rtlcss-webpack-plugin) [![npm downloads](https://img.shields.io/npm/dm/rtlcss-webpack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/rtlcss-webpack-plugin)
+## forked from [wix/rtlcss-webpack-plugin](https://github.com/wix/rtlcss-webpack-plugin) to support `rspack`
+
+> only support [fullhash], [name]
+
+---
+
+## RtlCss Webpack Plugin [![Build Status](https://img.shields.io/travis/wix/rtlcss-webpack-plugin/master.svg?style=flat-square)](https://travis-ci.org/wix/rtlcss-webpack-plugin) [![npm version](https://img.shields.io/npm/v/rtlcss-webpack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/rtlcss-webpack-plugin) [![npm downloads](https://img.shields.io/npm/dm/rtlcss-webpack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/rtlcss-webpack-plugin)
 
 Webpack plugin to use in addition to [extract-text-webpack-plugin](https://github.com/webpack/extract-text-webpack-plugin) to create a second css bundle, processed to be rtl.
 
@@ -9,7 +15,7 @@ This is almost entirely based on work done in [webpack-rtl-plugin](https://githu
 ## Installation
 
 ```shell
-$ npm install rtlcss-webpack-plugin
+$ npm install rtlcss-rspack-plugin
 ```
 
 ## Usage
@@ -17,7 +23,7 @@ $ npm install rtlcss-webpack-plugin
 Add the plugin to your webpack configuration:
 
 ```js
-import RtlCssPlugin from 'rtlcss-webpack-plugin';
+import RtlCssPlugin from 'rtlcss-rspack-plugin';
 
 module.exports = {
   entry: path.join(__dirname, 'src/index.js'),
@@ -49,4 +55,4 @@ new RtlCssPlugin('[name].rtl.css');
 new RtlCssPlugin({filename: '[name].rtl.css'});
 ```
 
-* `filename` Name of the result file. May contain [name], [id] and [hash]
+* `filename` Name of the result file. May contain [name], [fullhash]
