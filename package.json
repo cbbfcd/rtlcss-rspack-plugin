@@ -1,6 +1,6 @@
 {
   "name": "rtlcss-rspack-plugin",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "license": "MIT",
   "private": false,
   "author": {
@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "test": "ava",
-    "postpublish": "npm run build"
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "typescript": "^5.6.3",
